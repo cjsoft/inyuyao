@@ -207,8 +207,8 @@ int query(int u, int x, int y) {
     }
 }
 int main() {
-	freopen("drive.in", "r", stdin);
-	freopen("drive.out", "w", stdout);
+    freopen("drive.in", "r", stdin);
+    freopen("drive.out", "w", stdout);
     cin >> n;
     idx = 1;
     REP(i, 1, n) tree[1].v.PB(i), tree[1].S.insert(MP(i, i - 1));

@@ -1,0 +1,82 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <queue>
+#include <cassert>
+#define MXN 100007
+#define lowbit(x) (x & -x)
+using namespace std;
+typedef long long ll;
+// struct mpair {int first, second; mpair(int a, int b) {first = a; second = b;} mpair() {first = second = 0;}};
+// struct comp {bool operator()(const mpair &a, const mpair &b) {
+    // if ((ll)(a.first | a.second) * (a.first | a.first) + (ll)(a.first & a.second) * (a.first & a.second) - (ll)a.first * a.first - (ll)a.second * a.second > 
+            // (ll)(b.first | b.second) * (b.first | b.first) + (ll)(b.first & b.second) * (b.first & b.second) - (ll)b.first * b.first - (ll)b.second * b.second) return true;
+    // else return false;
+// }};
+// priority_queue<mpair, vector<mpair>, comp> Q;
+template<class T> inline int count1(T n);
+struct comp {
+    bool operator()(int a, int b) {
+        if (count1(a) == count1(b)) return a < b;
+        else return count1(a) > count1(b);
+    }
+};
+priority_queue<int, vector<int>, comp> Q;
+int n;
+int a[MXN];
+inline ll getll();
+inline int getint();
+void popp() {
+    puts("'1'");
+}
+int main() {
+    n = getint();
+    int temp;
+    ll resu = 0;
+    for (int i = 0; i < n; ++i) {
+        temp = getint();
+        if (count1(temp))
+            Q.push(temp);
+        a[i] = temp;
+        resu += (ll)temp * temp;
+    }
+    ll add = 0;
+    while (Q.size() > 1) {
+        // puts("232");
+        int a, b;
+        a = Q.top(); Q.pop();
+        b = Q.top(); Q.pop();
+        add = (ll)(a & b) * (a & b) + (ll)(a | b) * (a | b) - (ll)a * a - (ll)b * b;
+        if (add <= 0)
+            continue;
+        // assert(add > 0);
+        resu += add;
+        if (count1(a & b)) Q.push(a & b);
+        if (count1(a | b)) Q.push(a | b);
+    }
+    printf("%lld\n", resu);
+    return 0;
+}
+char ch;
+ll getll() {
+    ll rtn, f;
+    rtn = 0; f = 1;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}
+int getint() {
+    int rtn, f;
+    rtn = 0; f = 1;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}
+template <class T>
+int count1(T n) {
+    int rtn = 0;
+    for (; n > 0; n -= lowbit(n), ++rtn);
+    return rtn;
+}
