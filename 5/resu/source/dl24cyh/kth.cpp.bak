@@ -1,0 +1,94 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+#define MXN 5000007
+using namespace std;
+typedef long long ll;
+int size;
+int raw[MXN];
+struct BLOCK {
+    int data, id;
+    bool operator<(const BLOCK &b) const {
+        return data < b.data;
+    }
+} blocks[MXN];
+int blk[MXN];
+int atag[MXN];
+int lb, ub, n;
+inline void release(int x) {
+    int l = x * size + 1, r = std::min(l + size + 1, n + 1);
+    if (atag[x] != 0) {
+        for (int i = l; i < r; ++i) blk[i] += atag[x], raw[i] += atag[x];
+        atag[x] = false;
+    }
+}
+inline void build(int x) {
+    int l = x * size + 1,
+    r = std::min(l + size, n + 1);
+    for (int i = l; i < r; ++i) {
+        blk[i] = raw[i];
+    }
+    sort(blk + l, blk + r);
+}
+inline int query(int l, int r, int k) {
+    int blockl = (l - 1) / size + 1, blockr = (r - 1) / size - 1;
+    int d = lb, u = ub;
+    while (d <= u) {
+        int m = d + ((u - d) >> 1);
+        int kth = 0;
+        if (blockl <= blockr) {
+            if (blockl > 0) release(blockl - 1);
+            release(blockr + 1);
+            for (int i = l; i < blockl * size + 1; ++i) if (raw[i] <= m) ++kth;
+            for (int i = blockl; i <= blockr; ++i) kth += upper_bound(blk + i * size + 1, blk + i * size + size + 2, m - atag[i]) - i * size - blk;
+            for (int i = blockr * size + size + 1; i <= r; ++i) if (raw[i] <= m) ++kth;
+        } else for (int i = l; i <= r; ++i) if (raw[i] <= m) ++kth;
+        if (kth >= k) u = m - 1;
+        else d = m + 1;
+    }
+    return d;
+}
+inline void add(int l, int r, int data) {
+    int blockl = (l - 1) / size + 1, blockr = (r - l) / size - 1;
+    if (blockl > 0) release(blockl - 1);
+    release(blockr + 1);
+    for (int i = l; i < blockl * size; ++i) raw[i] += data;
+    if (blockl > 0) build(blockl - 1);
+    if (blockl <= blockr) {
+        for (int i = blockl; i <= blockr; ++i) atag[i] += data;
+    }
+    for (int i = blockr * size + size + 1; i <= r; ++i) raw[i] += data;
+    build(blockr + 1);
+}
+inline int getint();
+int main() {
+    n = getint();
+    size = sqrt(n) + 0.5;
+    lb = 0x3f3f3f3f, ub = -0x3f3f3f3f;
+    for (int i = 1; i <= n; ++i)
+        raw[i] = getint(), lb = min(lb, raw[i] - 1), ub = max(ub, raw[i] + 1);
+    int Q;
+    for (int i = 0; i <= size; ++i) build(i);
+    scanf("%d", &Q);
+    int a, b, c, d;
+    while (Q--) {
+        a = getint(); b = getint(); c = getint(); d = getint();
+        if (a == 1) {
+            add(b, c, d);
+        } else {
+            printf("\n%d\n", query(b, c, d));
+        }
+    }
+    return 0;
+}
+
+int getint() {
+    int rtn = 0, f = 1;
+    char ch;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}
