@@ -9,9 +9,19 @@ int n, q;
 int blk[MXN], raw[MXN];
 int atag[MXN];
 int size;
+int qqsolve(int a, int b, int k) {
+    int l = a, r = b, mid;
+    while (l + 1 < r) {
+        mid = l + ((r - l) >> 1);
+        if (blk[mid] < k) l = mid;
+        else r = mid;
+    }
+    if (blk[a] >= k) return 0;
+    else return l - a + 1;
+}
 void build(int x) {
     int r = std::min(x * size + size, n + 1);
-    for (int i = x * size; i < x * size + size; ++i) {
+    for (int i = x * size; i < r; ++i) {
         blk[i] = raw[i];
     }
     sort(blk + x * size, blk + r);
@@ -26,7 +36,7 @@ void add(int a, int b, int k) {
     for (int i = a; i < l * size + size; ++i) raw[i] += k;
     build(l);
     for (int i = l + 1; i < r; ++i) atag[i] += k;
-    for (int i = r * size; i < r * size + size; ++i) raw[i] += k;
+    for (int i = r * size; i <= b; ++i) raw[i] += k;
     build(r);
 }
 int count_lower(int a, int b, int k) {
@@ -36,8 +46,9 @@ int count_lower(int a, int b, int k) {
         for (int i = a; i <= b; ++i) if (raw[i] + atag[l] < k) ++cnt;
         return cnt;
     }
-    for (int i = a; i < l * size; ++i) if (raw[i] + atag[l] < k) ++cnt;
-    for (int i = l + 1; i < r; ++i) cnt += lower_bound(blk + i * size, blk + i * size + size,  k - atag[i]) - blk;
+    for (int i = a; i < l * size + size; ++i) if (raw[i] + atag[l] < k) ++cnt;
+    for (int i = l + 1; i < r; ++i) /*cnt += lower_bound(blk + i * size, blk + i * size + size,  k - atag[i]) - blk - i * size;*/
+        cnt += qqsolve(i * size, i * size + size, k - atag[i]);
     for (int i = r * size; i <= b; ++i) if (raw[i] + atag[r] < k) ++cnt;
     return cnt;
 }
@@ -55,9 +66,9 @@ void printint(int);
 int main() {
     // printint(231);
     freopen("kth.in", "r", stdin);
-    // freopen("kth.out", "w", stdout);
+    freopen("kth.out", "w", stdout);
     n = getint();
-    size = max(1., 1.4 * sqrt(n));
+    size = max(1., 1.65 * sqrt(n));
     raw[0] = -INF;
     for (int i = 1; i <= n; ++i) raw[i] = getint();
     for (int i = 0; i <= n / size; ++i) build(i);
