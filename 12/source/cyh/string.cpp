@@ -41,6 +41,7 @@ int main() {
     scanf("%d %d %d", &n, &m, &type);
     int x, y, ans = 0;
     int versionCursor, transTarget;
+    int tmpRoot;
     for (int i = 1; i <= n; ++i) {
         scanf("%d %d", &x, &y);
         if (type) x ^= ans, y ^= ans;
@@ -48,8 +49,8 @@ int main() {
         versionCursor = query(T[x], 0, n, x);
         transTarget = query(versionCursor, 1, m, y);
         printf("%d\n", ans = dep[i] - dep[transTarget]);
-        T[i] = edit(T[x], 0, n, x, edit(versionCursor, 1, m, y, i));
-        T[i] = edit(T[i], 0, n, i, query(T[i], 0, n, transTarget));
+        tmpRoot = edit(T[x], 0, n, x, edit(versionCursor, 1, m, y, i)); // 令trans(x, y) = i并产生一个新的版本
+        T[i] = edit(tmpRoot, 0, n, i, query(tmpRoot, 0, n, transTarget)); // 从transTarget得到trans(i)
     }
     return 0;
 }
