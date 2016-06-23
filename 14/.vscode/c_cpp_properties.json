@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": ["/usr/include"]
+        },
+        {
+            "name": "Linux",
+            "includePath": ["/usr/include"]
+        },
+        {
+            "name": "Win32",
+            "includePath": ["C:\\MinGW\\lib\\gcc\\mingw32\\4.8.1\\include"]
+        }
+    ],
+    "clang_format" : {
+        "style" : "file",
+        "fallback-style" : "LLVM",
+        "sort-includes" : "false"
+    }
+}
