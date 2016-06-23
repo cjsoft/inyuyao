@@ -74,7 +74,6 @@ int find(int data) {
     node *x = root;
     int dir = data < x->data;
     while (x->data != data) {
-        // if (x->c[dir] == nil) return dir ? k + x->c[0]->sz + 1 : k;
         if (dir) k += x->c[0]->sz + 1;
         x = x->c[dir];
         dir = data < x->data;
@@ -96,9 +95,6 @@ void swim(int k, node *y) {
 }
 void DELETE(int data) {
     int x = find(data);
-    // swim(x, nil);
-    // if (root->data != data) throw 1;
-    // if (x < 3) throw 1;
     swim(x - 1, nil);
     swim(x + 1, root);
     root->c[1]->c[0] = nil;
@@ -117,18 +113,8 @@ void INSERT(int data) {
     update(x);
     splay(x, nil);
     return;
-    // asd();
-    // int x = find(data);
-    // printf("  %d %d\n", x,data);
-    // swim(x, nil);
-    // swim(x + 1, root);
-    // root->c[1]->c[0] = newnode(data, root->c[1]);
-    // update(root->c[1]);
-    // update(root);
 }
 void edit(int data, int newdata) {
-    // root->print();
-    // puts("");
     DELETE(data);
     INSERT(newdata);
 }
