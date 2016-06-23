@@ -33,6 +33,9 @@ void dfs(int root, int fa) {
 }
 inline int getint();
 int main() {
+    freopen("UZASTOPNI.in", "r", stdin);
+    freopen("UZASTOPNI.out", "w", stdout);
+    
     n = getint();
     int a, b;
     for (int i = 1; i <= n; ++i) v[i] = getint();
