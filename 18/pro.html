@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="kmp">KMP</h1>
+<h1 id="kmp">kmp.cpp/c/pas 1s 1024MB</h1>
+<p>Bobo 最近学会了 KMP 算法，他感觉很开心！</p>
+<p>具体地，对于字符串 <span class="math inline"><em>S</em> = <em>s</em><sub>1</sub><em>s</em><sub>2</sub>…<em>s</em><sub><em>n</em></sub></span>, <span class="math inline"><em>K</em><em>M</em><em>P</em>(<em>S</em>)=(<em>f</em><sub>2</sub>, <em>f</em><sub>3</sub>, …, <em>f</em><sub><em>n</em></sub>)</span>. 其中，<span class="math inline"><em>f</em><sub><em>i</em></sub></span> 表示最大的 <span class="math inline">0 ≤ <em>j</em> ≤ <em>i</em></span> 使得 <span class="math inline"><em>s</em><sub>1</sub><em>s</em><sub>2</sub>…<em>s</em><sub><em>j</em></sub> = <em>s</em><sub><em>i</em> − <em>j</em> + 1</sub><em>s</em><sub><em>i</em> − <em>j</em> + 2</sub>…<em>s</em><sub><em>i</em></sub></span>.</p>
+<p>现在已知 <span class="math inline"><em>K</em><em>M</em><em>P</em>(<em>S</em>)=(<em>f</em><sub>2</sub>, <em>f</em><sub>3</sub>, …, <em>f</em><sub><em>n</em></sub>)</span>, 而且 <span class="math inline"><em>S</em></span> 中只含有前 <span class="math inline"><em>c</em></span> 种字符，Bobo 想知道不同的 <span class="math inline"><em>S</em></span> 的数量除以 <span class="math inline">(10<sup>9</sup> + 7)</span> 的余数。</p>
+<h2 id="输入">输入</h2>
+<p>第一行，包含两个整数 <span class="math inline"><em>n</em>, <em>c</em></span>.</p>
+<p>第二行，包含 <span class="math inline">(<em>n</em> − 1)</span> 个整数 <span class="math inline"><em>f</em><sub>2</sub>, <em>f</em><sub>3</sub>, …, <em>f</em><sub><em>n</em></sub></span>.</p>
+<p>保证满足条件的字符串存在。</p>
+<ul>
+<li>对于 <span class="math inline">20%</span> 的数据，<span class="math inline"><em>n</em> ≤ 10</span>;</li>
+<li>对于 <span class="math inline">100%</span> 的数据，<span class="math inline">1 ≤ <em>n</em> ≤ 2 × 10<sup>5</sup>, 1 ≤ <em>c</em> ≤ 10<sup>9</sup>, 0 ≤ <em>f</em><sub><em>i</em></sub> &lt; <em>i</em></span>.</li>
+</ul>
+<h2 id="输出">输出</h2>
+<p>一个整数，代表所求的答案。</p>
+<h2 id="样例输入-1">样例输入 1</h2>
+<pre><code>3 3
+0 0</code></pre>
+<h2 id="样例输出-1">样例输出 1</h2>
+<pre><code>12</code></pre>
+<h2 id="样例输入-2">样例输入 2</h2>
+<pre><code>5 1000000000
+1 2 3 4</code></pre>
+<h2 id="样例输出-2">样例输出 2</h2>
+<pre><code>1000000000</code></pre>
+<h2 id="样例-3">样例 3</h2>
+<p>参加 <code>samples/003</code>, <code>samples/003.a</code></p>
+<h1 id="异或">异或</h1>
+<h1 id="异或">xor.cpp/c/pas 1s 1024MB</h1>
+<p>Bobo 有 <span class="math inline"><em>n</em></span> 个数 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, …, <em>a</em><sub><em>n</em></sub></span>. 他在 <span class="math inline">2<sup><em>n</em></sup></span> 个子集中等概率地选择一个，设选中的数的异或和中 <span class="math inline">1</span> 的个数是 <span class="math inline"><em>x</em></span>，那么 Bobo 能获得 <span class="math inline"><em>x</em><sup><em>k</em></sup></span> 的分数。</p>
+<p>设 Bobo 能获得分数的期望是 <span class="math inline"><em>E</em></span>，Bobo 想知道 <span class="math inline">(2<sup><em>n</em></sup> ⋅ <em>E</em>)</span> 除以 <span class="math inline">(10<sup>9</sup> + 7)</span> 的余数。</p>
+<h2 id="输入-1">输入</h2>
+<p>第一行，包含两个整数 <span class="math inline"><em>n</em>, <em>k</em></span>.</p>
+<p>第二行，包含 <span class="math inline"><em>n</em></span> 个整数 <span class="math inline"><em>a</em><sub>1</sub>, <em>a</em><sub>2</sub>, …, <em>a</em><sub><em>n</em></sub></span>.</p>
+<ul>
+<li>对于 <span class="math inline">10%</span> 的数据，<span class="math inline"><em>n</em> ≤ 20</span>;</li>
+<li>对于另外 <span class="math inline">20%</span> 的数据，<span class="math inline"><em>k</em> = 4</span>;</li>
+<li>对于另外 <span class="math inline">30%</span> 的数据，<span class="math inline"><em>k</em> = 5</span>;</li>
+<li>对于 <span class="math inline">100%</span> 的数据，<span class="math inline">1 ≤ <em>n</em> ≤ 40, 1 ≤ <em>k</em> ≤ 40, 0 ≤ <em>a</em><sub><em>i</em></sub> &lt; 2<sup>40</sup></span>.</li>
+</ul>
+<h2 id="输出-1">输出</h2>
+<p>一个整数，代表所求的答案。</p>
+<h2 id="样例输入-1-1">样例输入 1</h2>
+<pre><code>3 2
+1 2 3</code></pre>
+<h2 id="样例输出-1-1">样例输出 1</h2>
+<pre><code>12</code></pre>
+<h2 id="样例输入-2-1">样例输入 2</h2>
+<pre><code>2 1000000000
+1 2</code></pre>
+<h2 id="样例输出-2-1">样例输出 2</h2>
+<pre><code>140625003</code></pre>
+<h2 id="样例-3-1">样例 3</h2>
+<p>参加 <code>samples/003</code>, <code>samples/003.a</code></p>
+<h1 id="染色数">染色数</h1>
+<h1 id="染色数">graph.cpp/c/pas 3s 1024MB</h1>
+<p>Bobo 有一个 <span class="math inline"><em>n</em></span> 个点，<span class="math inline"><em>m</em></span> 条边的无向连通图。 为了方便，Bobo 用 <span class="math inline">1, 2, …, <em>n</em></span> 给图的顶点编号。</p>
+<p>现在，Bobo 想把每个顶点染成 <span class="math inline"><em>c</em></span> 种颜色中的一种，使得相邻的顶点不同色。 他想知道所有合法的染色方案除以 <span class="math inline">(10<sup>9</sup> + 7)</span> 的余数。</p>
+<h2 id="输入-2">输入</h2>
+<p>第一行，包含三个整数 <span class="math inline"><em>n</em>, <em>m</em>, <em>c</em></span>.</p>
+<p>接下来 <span class="math inline"><em>m</em></span> 行的第 <span class="math inline"><em>i</em></span> 行包含两个整数 <span class="math inline"><em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>i</em></sub></span>, 表示顶点 <span class="math inline"><em>a</em><sub><em>i</em></sub></span> 和 <span class="math inline"><em>b</em><sub><em>i</em></sub></span> 之间存在一条边。</p>
+<ul>
+<li>对于 <span class="math inline">20%</span> 的数据，<span class="math inline"><em>n</em> ≤ 10<sup>5</sup>, <em>m</em> ≤ <em>n</em></span>;</li>
+<li>对于 <span class="math inline">40%</span> 的数据，<span class="math inline"><em>n</em> ≤ 10<sup>5</sup>, <em>m</em> ≤ <em>n</em> + 5</span>;</li>
+<li>对于另外 <span class="math inline">20%</span> 的数据，<span class="math inline"><em>n</em> ≤ 100, <em>m</em> ≤ <em>n</em> + 8</span>;</li>
+<li>对于 <span class="math inline">100%</span> 的数据，<span class="math inline">1 ≤ <em>n</em> ≤ 10<sup>5</sup>, 1 ≤ <em>m</em> ≤ <em>n</em> + 8, 1 ≤ <em>c</em> ≤ 10<sup>9</sup>, 1 ≤ <em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>i</em></sub> ≤ <em>n</em></span>.</li>
+</ul>
+<h2 id="输出-2">输出</h2>
+<p>一个整数，代表所求的答案。</p>
+<h2 id="样例输入-1-2">样例输入 1</h2>
+<pre><code>3 3 3
+1 2
+2 3
+3 1</code></pre>
+<h2 id="样例输出-1-2">样例输出 1</h2>
+<pre><code>6</code></pre>
+<h2 id="样例输入-2-2">样例输入 2</h2>
+<pre><code>4 3 1000000000
+1 2
+2 3
+3 4</code></pre>
+<h2 id="样例输出-2-2">样例输出 2</h2>
+<pre><code>3584</code></pre>
+<h2 id="样例-3-2">样例 3</h2>
+<p>参加 <code>samples/003</code>, <code>samples/003.a</code></p>
+</body>
+</html>

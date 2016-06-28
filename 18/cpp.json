@@ -1,0 +1,73 @@
+{
+/*
+	 // Place your snippets for C++ here. Each snippet is defined under a snippet name and has a prefix, body and 
+	 // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	 // $1, $2 for tab stops, ${id} and ${id:label} and ${1:label} for variables. Variables with the same id are connected.
+	 // Example:
+	 "Print to console": {
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	}
+*/
+	"freopen2": {
+		"prefix": "freopen2",
+		"body": [
+			"freopen(\"$1.in\", \"r\", stdin);",
+			"freopen(\"$1.out\", \"w\", stdout);$2"
+		]
+	},
+	"if": {
+		"prefix": "if",
+		"body": [
+			"if ($1) {",
+			"	$2",
+			"}"
+		]
+	},
+	"for": {
+		"prefix": "for",
+		"body": [
+			"for (int ${1:i} = ${2:0}; ${1:i} < ${3:count}; ${4:++}${1:i}) {",
+			"	$5",
+			"}"
+		]
+	},
+	"while": {
+		"prefix": "while",
+		"body": [
+			"while ($1) {",
+			"	$2",
+			"}"
+		]
+	},
+	"switch": {
+		"prefix": "switch",
+		"body": [
+			"switch ($1) {",
+			"	$2",
+			"}"
+		]
+	},
+	"getint()": {
+		"prefix": "__getint",
+		"body": [
+			"${1:inline }${2:int} get${2:int}() {",
+			"	static ${2:int} rtn, f;",
+			"	static char ch;",
+			"	rtn = 0; f = 1;",
+			"	while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;",
+			"	rtn = ch - '0';",
+			"	while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';",
+			"	return rtn * f;",
+			"}$3"
+		]
+	},
+	"return": {
+		"prefix": "return",
+		"body": "return $1;$2"
+	}
+}
