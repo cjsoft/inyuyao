@@ -1,0 +1,173 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#define isrson(x) ((x)->parent->c[1] == (x))
+#define mid(l, r) (l + ((r - l) >> 1))
+#define INF 0x3f3f3f3f
+#define MOD 1000000007
+#define SZ 10
+#define MXN 1000007
+using namespace std;
+typedef long long ll;
+int mat[117][11][11];
+int tag[MXN];
+int seq[MXN + 100];
+int n;
+struct node {
+    node *parent, *c[2];
+    int sz, data;
+} *root, *nil, _nil, buf[MXN + SZ], *cur;
+inline node *newnode(int data, node *parent) {
+    cur->sz = 1;
+    cur->parent = parent;
+    cur->c[0] = cur->c[1] = nil;
+    cur->data = data;
+    return cur++;
+}
+inline void update(node *x) {x->sz = x->c[0]->sz + 1 + x->c[1]->sz;}
+void init() {
+    cur = buf;
+    nil = &_nil;
+    nil->sz = 0;
+    nil->parent = nil->c[0] = nil->c[1] = nil;
+    nil->data = 0;
+    root = newnode(-INF, nil);
+    root->c[1] = newnode(INF, root);
+    update(root);
+}
+inline void rotate(node *x) {
+    node *p = x->parent, *z = p->parent;
+    int fx = isrson(x), fp = isrson(p);
+    if (p == root) root = x;
+    else z->c[fp] = x;
+    p->c[fx] = x->c[fx ^ 1];
+    x->c[fx ^ 1] = p;
+    p->c[fx]->parent = p;
+    p->parent = x;
+    x->parent = z;
+    update(p);
+}
+inline void splay(node *x, node *y) {
+    for (; x->parent != y; rotate(x)) {
+        if (x->parent->parent != y) {
+            if (isrson(x) == isrson(x->parent)) rotate(x->parent);
+            else rotate(x);
+        }
+    }
+    update(x);
+}
+node *findk(int k) {
+    node *x = root;
+    int dir = k > x->c[0]->sz + 1;
+    while (x->c[0]->sz + 1 != k) {
+        if (dir) k -= x->c[0]->sz + 1;
+        x = x->c[dir];
+        dir = k > x->c[0]->sz + 1;
+    }
+    return x;
+}
+void swim(int k, node *y) {
+    node *x = findk(k);
+    splay(x, y);
+}
+node *build(int l, int r, node *parent) {
+    if (l > r) return nil;
+    if (l == r) {
+        node *x = newnode(seq[l], parent);
+        return x;
+    }
+    int m = mid(l, r);
+    node *x = newnode(seq[m], parent);
+    x->c[0] = build(l, m - 1, x);
+    x->c[1] = build(m + 1, r, x);
+    update(x);
+    return x;
+}
+void multi(int a, int b, int c) {
+    static int mm[2][11][11];
+    for (int i = 0; i < SZ; ++i)
+        for (int j = 0; j < SZ; ++j)
+            mm[0][i][j] = mat[a][i][j], mm[1][i][j] = mat[b][i][j], mat[c][i][j] = 0;//, swap(mm[0][i][j], mm[1][i][j]);
+    for (int i = 0; i < SZ; ++i) {
+        for (int j = 0; j < SZ; ++j) {
+            for (int k = 0; k < SZ; ++k) {
+                mat[c][i][j] = (mat[c][i][j] + (ll)mm[0][i][k] * mm[1][k][j] % MOD) % MOD;
+                if (mat[c][i][j] < 0) mat[c][i][j] += MOD;
+            }
+        }
+    }
+}
+void print(int n) {
+    for (int i = 0; i < SZ; ++i) {
+        for (int j = 0; j < SZ; ++j) {
+            printf("%d ", mat[n][i][j]);
+        }
+        putchar('\n');
+    }
+}
+void dfs(node *x) {
+    if (x == nil || x->data == INF || x->data == -INF) return;
+    dfs(x->c[0]);
+    printf("%d\n", x->data);
+    multi(0, x->data, 0);
+    dfs(x->c[1]);
+}
+inline int getint();
+int main() {
+    init();
+    for (int i = 0; i < SZ; ++i) mat[0][i][i] = 1;
+    for (int k = 1; k <= SZ; ++k) {
+        for (int i = 0; i < SZ; ++i) {
+            for (int j = 0; j < SZ; ++j) {
+                mat[k][i][j] = getint();
+            }
+        }
+    }
+    n = getint();
+
+    for (int i = 1; i <= n; ++i) seq[i] = getint();
+    for (int k = 1; k <= 100; ++k) {
+        int tmp = getint();
+        for (int i = n + k + 1; i > tmp + 1; --i) seq[i] = seq[i - 1];
+        seq[tmp + 1] = k + 10;
+        for (int i = 0; i < SZ; ++i) {
+            for (int j = 0; j < SZ; ++j) {
+                mat[k + 10][i][j] = getint();
+            }
+        }
+    }
+    for (int i = 1; i <= 100 + n; ++i) multi(0, seq[i], 0);
+    for (int i = 1; i <= 100 + n; ++i) printf("%d\n", seq[i]);
+    // root->c[1]->c[0] = build(1, n, root->c[1]);
+    // update(root->c[1]);
+    // update(root);
+    // for (int k = 1; k <= 100; ++k) {
+    //     int tmp = getint();
+    //     swim(tmp + 1, nil);
+    //     swim(tmp + 2, root);
+    //     root->c[1]->c[0] = newnode(k + 10, root->c[1]);
+    //     update(root->c[1]);
+    //     update(root);
+    //     for (int i = 0; i < SZ; ++i) {
+    //         for (int j = 0; j < SZ; ++j) {
+    //             mat[k + 10][i][j] = getint();
+    //         }
+    //     }
+    // }
+    // dfs(root);
+    // for (map<int, int>::iterator i = seq.begin(); i != seq.end(); i++)
+    //     printf("%d\n", i->first);
+        // multi(0, i->second, 0);
+    print(0);
+    return 0;
+}
+
+int getint() {
+    static int rtn, f;
+    static char ch;
+    rtn = 0; f = 1;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}

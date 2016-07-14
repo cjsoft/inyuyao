@@ -1,0 +1,102 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define EPS 1e-6
+#define MOD 1000000007
+#define MXN 107
+using namespace std;
+typedef long long ll;
+struct matrix {
+    ll d[MXN][MXN];
+    int n;
+};
+int n;
+double X[MXN], Y[MXN];
+int x[MXN], y[MXN];
+inline bool check(double x1, double y1, double x2, double y2, double x3, double y3) {
+    double dx1 = x2 - x1, dy1 = y2 - y1; 
+    if (fabs(dx1) < EPS && fabs(dy1) < EPS) return false;
+    double dx2 = x3 - x2, dy2 = = y3 - y1;
+    if (fabs(dx2) < EPS && fabs(dy2) < EPS) return false;
+    double dx3 = x3 - x1, dy3 = y3 - y1;
+    if (fabs(dx3) < EPS && fabs(dy3) < EPS) return false;
+    if (fabs(dx1 * dy2 - dx2 * dy1) < EPS || fabs(dx2 * dy3 - dx3 * dy2) < EPS || fabs(dx1 * dy3 - dx3 * dy1) < EPS) return false;
+    return true;
+}
+inline void locircle(double x1, double y1, double x2, double y2, double x3, double y3, double &x0, double &y0, double &sqrr) {
+    double a1 = x1 - x2, b1 = y1 - y2, c1 = (x2 * x2 + y2 * y2 - x1 * x1 - y1 * y1) / 2;
+    double a2 = x2 - x3, b2 = y2 - y3, c2 = (x3 * x3 + y3 * y3 - x2 * x2 - y2 * y2) / 2;
+    x0 = (a2 * c1 - a1 * c2) / (a1 * b2 - a2 * b1);
+    y0 = (b2 * c1 - b1 * c2) / (b1 * a2 - b2 * a1);
+    sqrr = (x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0);
+}
+inline int getint();
+int main() {
+    n = getint();
+    for (int i = 0; i < n; ++i) x[i] = getint(); y[i] = getint();
+    int m = getint();
+    int l = getint(), r = getint();
+    int id = 0;
+    for (int i = l; i <= r; ++i) X[id] = x[i], Y[id++] = y[i];
+    double rad = 999999999999999., x = 0, y = 0;
+    double tmprr = 0, tx = 0, ty = 0;
+    double tid, dr, tdr, xx, yy;
+    for (int i = 2; i < id; ++i) {
+        for (int j = 1; j < i; ++j) {
+            for (int k = 0; k < j; ++k) {
+                if (check(X[i], Y[i], X[j], Y[j], X[k], Y[k])) {
+                    locircle(X[i], Y[i], X[j], Y[j], X[k], Y[k], tx, ty, tmprr);
+                    tid = 0;
+                    dr = (X[tid] - tx) * (X[tid] - tx) + (Y[tid] - ty) * (Y[tid] - ty);
+                    for (int l = 0; l < id; ++l) {
+                        tdr = (X[l] - tx) * (X[l] - tx) + (Y[l] - ty) * (Y[l] - ty);
+                        if (tdr > dr) {
+                            dr = tdr;
+                            tid = l;
+                        }
+                    }
+                    if (dr < tmprr) {
+                        if (dr < rad) {
+                            rad = dr;
+                            x = tx, y = ty;
+                        }
+                    } else {
+                        dr = 0;
+                        xx = 0, yy = 0;
+                        locircle(X[i], Y[i], X[j], Y[j], X[tid], Y[tid], tx, ty, tmprr);
+                        if (tmprr > dr) {
+                            xx = tx, yy = ty;
+                            dr = tmprr;
+                        }
+                        locircle(X[k], Y[k], X[j], Y[j], X[tid], Y[tid], tx, ty, tmprr);
+                        if (tmprr > dr) {
+                            xx = tx, yy = ty;
+                            dr = tmprr;
+                        }
+                        locircle(X[k], Y[k], X[i], Y[i], X[tid], Y[tid], tx, ty, tmprr);
+                        if (tmprr > dr) {
+                            xx = tx, yy = ty;
+                            dr = tmprr;
+                        }
+                        if (dr < rad) {
+                            rad = dr;
+                            x = xx, y = yy;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int getint() {
+    static int rtn, f;
+    static char ch;
+    rtn = 0; f = 1;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}
