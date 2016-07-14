@@ -41,7 +41,7 @@ inline void update(int ans, int i, int j){ if (i < j && i > 0 && j <= m && ans <
 	
 int main(){
 	freopen("hero.in", "r", stdin);
-	freopen("hero.out", "w", stdout);
+	// freopen("hero.out", "w", stdout);
 
 	n = rint, m = rint, K = rint;
 	REP(i, 1, n) REP(j, 1, m) a[i][j] = rint;

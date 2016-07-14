@@ -50,7 +50,7 @@ int spfa(int from, int to) {
     queue<int> Q;
     Q.push(from);
     inq[from] = 1;
-    dist[from] = 0;
+    // idkast[from] = 0;
     while (!Q.empty()) {
         tmp = Q.front();
         iterate(tmp, i) {
