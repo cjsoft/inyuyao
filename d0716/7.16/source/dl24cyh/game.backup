@@ -1,0 +1,34 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define MXN 50007
+using namespace std;
+typedef long long ll;
+template<typename T> inline void checkmin(T &a, T b) { if (a > b) a = b; }
+struct data {
+    int type;
+    ll a, b, c;
+    bool operator<(const data &B) const {
+        if (type != B.type) {
+            if (type == 1) return a < B.a;
+            else if (type == 2) return a > B.b;
+        } else {
+            return type < B.type;
+        }
+    }
+} buf[MXN];
+int n;
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        init();
+        scanf("%d", &n);
+        for (int i = 1; i <= n; ++i) {
+            scanf("%lld %lld", &buf[i].a, &buf[i].b);
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="TRA_0_4" maker="pcdialog">
+    <source dir="math" file="math" code="100">
+        <language cmd="fpc math.pas" file="math.pas"/>
+        <language cmd="g++ -o math math.cpp -lm" file="math.cpp"/>
+        <language cmd="gcc -o math math.c -lm" file="math.c"/>
+    </source>
+    <task output="math.out" input="math.in" io="0" checker="math_e">
+        <subtask score="5">
+            <point in="math0.in" out="math0.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math1.in" out="math1.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math2.in" out="math2.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math3.in" out="math3.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math4.in" out="math4.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math5.in" out="math5.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math6.in" out="math6.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math7.in" out="math7.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math8.in" out="math8.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math9.in" out="math9.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math10.in" out="math10.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math11.in" out="math11.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math12.in" out="math12.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math13.in" out="math13.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math14.in" out="math14.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math15.in" out="math15.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math16.in" out="math16.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math17.in" out="math17.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math18.in" out="math18.out" time="5" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="math19.in" out="math19.out" time="5" mem="256"/>
+        </subtask>
+    </task>
+</problem>

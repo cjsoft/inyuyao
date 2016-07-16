@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+int n, K;
+double dp[1007][57][1007];
+int a[1007];
+inline int sum(int A, int B) { return a[B] - a[A - 1]; }
+template <typename T>
+inline void checkmin(T &a, T b) { if (a > b) a = b; }
+double gmin(int fnow, int i, int j) {
+		if (j == 1) return dp[fnow][1][fnow];
+		else {
+			double m = double((int)0x3fffffff);
+			for (int k = 1; k <= i - j + 1; ++k) {
+				checkmin(m, dp[fnow][j][k]);
+			}
+			return m;
+		}
+}
+int main() {
+	scanf("%d %d", &n, &K);
+	for (int i = 1; i <= n; ++i) {
+		scanf("%d", a + i);
+		a[i] += a[i - 1];
+	}
+	int tmp;
+	int now = 0, last = 1;
+	dp[now][1][1] = 1;
+	for (int i = 1; i <= n; ++i) {
+		tmp = min(K, i);
+		for (int j = 1; j <= tmp; ++j) {
+			for (int k = 1; k <= i - j + 1; ++k) {
+				if (j >= 2) {
+					if (k >= 2) {
+						dp[now][j][k] = dp[last][j][k - 1] + sum(i - k + 1, i) / (double)sum(i, i);
+					} else {
+						if (i == 3 && j == 2)
+							puts("sd");
+						dp[now][j][1] = gmin(last, i - 1, j - 1) + 1;
+					}
+				} else {
+					dp[now][1][i] = dp[last][1][i - 1] + sum(1, i) / (double)sum(i, i);
+				}
+			}
+		}
+		swap(now, last);
+	}
+	for (int i = 1; i <= n; ++i) {
+		printf("%.10lf\n", dp[last][K][i]);
+	}
+}

@@ -1,0 +1,120 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <queue>
+#define INF 0x3f3f3f3f
+#define MXN 100007
+#define mid(l, r) (l + ((r - l) >> 1))
+#define iterate(_x, _i) for (edge *_i = head[_x]; _i; _i = _i->prev)
+#define lson(x) ((x) << 1)
+#define rson(x) ((x) << 1 | 1)
+
+using namespace std;
+struct pos {
+    int x, y, id;
+    bool operator<(const pos &b) const {
+        return y < b.y;
+    }
+} cities[MXN];
+int n, m;
+int S, T;
+int dist[1007];
+inline int iabs(int a) { if (a < 0) return -a; else return a; }
+struct edge {
+    edge *prev;
+    int to, weight;
+} buf[1007 << 1 | 1], *cur, *head[1007];
+void initegs() {
+    memset(buf, 0, sizeof(buf));
+    memset(head, 0, sizeof(head));
+    cur = buf;
+}
+inline void addedge(int a, int b, int weight) {
+    cur->prev = head[a];
+    cur->to = b;
+    cur->weight = weight;
+    head[a] = cur++;
+}
+void spfa() {
+    char inq[1007];
+    memset(inq, 0, sizeof(inq));
+    memset(dist, 0x3f, sizeof(dist));
+    queue<int> q;
+    inq[S] = 1;
+    dist[S] = 0;
+    q.push(S);
+    while (!q.empty()) {
+        static int u, v, w;
+        u = q.front();
+        iterate(u, i) {
+            v = i->to; w = i->weight;
+            if (max(w, dist[u]) < dist[v]) {
+                dist[v] = max(w, dist[u]);
+                if (!inq[v]) {
+                    inq[v] = 1;
+                    q.push(v);
+                }
+            }
+        }
+        q.pop();
+        inq[u] = 0;
+    }
+}
+
+int stree[MXN << 2 | 1];
+inline void update(int root, int l, int r) {
+    if (l >= r) return;
+    stree[root] = max(stree[lson(root)], stree[rson(root)]);
+}
+void build(int root, int l, int r) {
+    if (l == r) {
+        stree[root] = cities[l + 1].y - cities[l].y;
+        return;
+    }
+    build(lson(root), l, mid(l, r));
+    build(rson(root), mid(l, r) + 1, r);
+    update(root, l, r);
+}
+int query(int root, int l, int r, int ql, int qr) {
+    if (l > qr || r < ql) return -INF;
+    if (l >= ql && r <= qr) return stree[root];
+    return max(query(lson(root), l, mid(l, r), ql, qr), query(rson(root), mid(l, r) + 1, r, ql, qr));
+}
+int loc[MXN];
+
+int main() {
+        freopen("a.in", "r", stdin);
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) {
+        scanf("%d %d", &cities[i].x, &cities[i].y);
+        cities[i].id = i;
+    }
+    if (n <= 1000) {
+        *egs =
+        for (int i = 1; i < n; ++i) {
+            for (int j = i + 1; j <= n; ++j) {
+                addedge(i, j, iabs(cities[i].x - cities[j].x) + iabs(cities[i].y - cities[j].y));
+                addedge(j, i, iabs(cities[i].x - cities[j].x) + iabs(cities[i].y - cities[j].y));
+            }
+        }
+        scanf("%d", &m);
+        for (int i = 0; i < m; ++i) {
+            scanf("%d %d", &S, &T);
+            spfa();
+            printf("%d\n", dist[T]);
+        }
+    } else {
+        sort(cities + 1, cities + 1 + n);
+        for (int i = 1; i <= n; ++i) loc[cities[i].id] = i;
+        build(1, 1, n - 1);
+        scanf("%d", &m);
+        for (int i = 0; i < m; ++i) {
+            scanf("%d %d", &S, &T);
+            if (loc[S] > loc[T]) swap(S, T);
+            printf("%d\n", query(1, 1, n - 1, loc[S], loc[T] - 1));
+        }
+    }
+    
+    return 0;
+}

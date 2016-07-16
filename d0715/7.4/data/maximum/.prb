@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="TRA_0_4" maker="pcdialog">
+    <source dir="maximum" file="maximum" code="100">
+        <language cmd="fpc maximum.pas" file="maximum.pas"/>
+        <language cmd="g++ -o maximum maximum.cpp -lm" file="maximum.cpp"/>
+        <language cmd="gcc -o maximum maximum.c -lm" file="maximum.c"/>
+    </source>
+    <task output="maximum.out" input="maximum.in" io="0" checker="全文比较">
+        <subtask score="5">
+            <point in="maximum0.in" out="maximum0.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum1.in" out="maximum1.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum2.in" out="maximum2.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum3.in" out="maximum3.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum4.in" out="maximum4.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum5.in" out="maximum5.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum6.in" out="maximum6.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum7.in" out="maximum7.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum8.in" out="maximum8.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum9.in" out="maximum9.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum10.in" out="maximum10.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum11.in" out="maximum11.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum12.in" out="maximum12.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum13.in" out="maximum13.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum14.in" out="maximum14.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum15.in" out="maximum15.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum16.in" out="maximum16.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum17.in" out="maximum17.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum18.in" out="maximum18.out" time="3" mem="128"/>
+        </subtask>
+        <subtask score="5">
+            <point in="maximum19.in" out="maximum19.out" time="3" mem="128"/>
+        </subtask>
+    </task>
+</problem>

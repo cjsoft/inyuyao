@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="TRA_0_4" maker="pcdialog">
+    <source dir="shortest" file="shortest" code="100">
+        <language cmd="fpc shortest.pas" file="shortest.pas"/>
+        <language cmd="g++ -o shortest shortest.cpp -lm" file="shortest.cpp"/>
+        <language cmd="gcc -o shortest shortest.c -lm" file="shortest.c"/>
+    </source>
+    <task output="shortest.out" input="shortest.in" io="0" checker="全文比较">
+        <subtask score="5">
+            <point in="shortest0.in" out="shortest0.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest1.in" out="shortest1.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest2.in" out="shortest2.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest3.in" out="shortest3.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest4.in" out="shortest4.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest5.in" out="shortest5.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest6.in" out="shortest6.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest7.in" out="shortest7.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest8.in" out="shortest8.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest9.in" out="shortest9.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest10.in" out="shortest10.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest11.in" out="shortest11.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest12.in" out="shortest12.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest13.in" out="shortest13.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest14.in" out="shortest14.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest15.in" out="shortest15.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest16.in" out="shortest16.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest17.in" out="shortest17.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest18.in" out="shortest18.out" time="3" mem="256"/>
+        </subtask>
+        <subtask score="5">
+            <point in="shortest19.in" out="shortest19.out" time="3" mem="256"/>
+        </subtask>
+    </task>
+</problem>
