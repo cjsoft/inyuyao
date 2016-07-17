@@ -1,0 +1,34 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define MXN 500007
+#define MOD 998244353
+template <typename T> inline void checkmax(T &a, T b) { if (b > a) a = b; }
+using namespace std;
+typedef long long ll;
+int a[MXN], f[MXN], n;
+inline int getint() {
+    static int rtn, f;
+    static char ch;
+    rtn = 0; f = 1;
+    while ((ch = getchar()) < '0' || ch > '9') if (ch == '-') f = -f;
+    rtn = ch - '0';
+    while ((ch = getchar()) >= '0' && ch <= '9') rtn = rtn * 10 + ch - '0';
+    return rtn * f;
+}
+int main() {
+    n = getint();
+    int ans = 0, sum = 0;
+    for (int i = 1; i <= n; ++i) a[i] = f[i] = getint(), ans = sum = ((ll)sum + a[i]) % MOD;
+    for (int m = 2; m <= n; ++m) {
+        sum = 0;
+        for (int i = 1; i <= n - m + 1; ++i) {
+            checkmax(f[i], a[i + m - 1]);
+            sum = ((ll)sum + f[i]) % MOD;
+        }
+        ans ^= sum;
+    }
+    printf("%d\n", ans);
+    return 0;
+}
