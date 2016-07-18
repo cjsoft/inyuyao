@@ -22,6 +22,9 @@ inline int getint() {
     return rtn * f;
 }
 void solve(int l, int r) {
+// f[i] 长度为i的结果与长度为i-1的结果之差
+// a[i] 为原数组
+// b[i] 为临时数组，用于存放b[i, mid]/[mid + 1, i]的最大值
     if (l > r) return;
     if (l == r) {
         f[1] = (f[1] + a[l]) % MOD;
