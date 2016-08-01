@@ -12,7 +12,7 @@ struct PersistentSeg {
     int L[(MXN << 4) + (MXN << 2) | 1],
         R[(MXN << 4) + (MXN << 2) | 1];
     pii stree[(MXN << 4) + (MXN << 2) | 1];
-    bool etag[(MXN << 4) + (MXN << 2) | 1];
+    // bool etag[(MXN << 4) + (MXN << 2) | 1];
     // pii tag[(MXN << 4) + (MXN << 2) | 1];
     int versions[MXN];
     int tot;
@@ -26,7 +26,8 @@ struct PersistentSeg {
     //     }
     // }
     int edit(int last, int l, int r, int ql, int qr, pii data) {
-        if (l > qr || r < ql) return last;
+        if (l > qr || r < ql)
+            return last;
         int y = tot++;
         if (l >= ql && r <= qr) {
             // etag[y] = true;
@@ -62,6 +63,7 @@ struct Seg {
         etag[root] = data;
     }
     inline void pushdown(int root, int l, int r) {
+        if (l >= r) return;
         if (etag[root] != -INF) {
             edit(lson(root), l, mid(l, r), etag[root]);
             edit(rson(root), mid(l, r) + 1, r, etag[root]);
@@ -69,6 +71,8 @@ struct Seg {
         }
     }
     void edit(int root, int l, int r, int ql, int qr, int data) {
+        // for (int i = ql; i <= qr; ++i) stree[i] = data;
+        // return;
         if (l > qr || r < ql) return;
         if (l >= ql && r <= qr) {
             edit(root, l, r, data);
@@ -80,6 +84,9 @@ struct Seg {
         update(root, l, r);
     }
     int query(int root, int l, int r, int ql, int qr) {
+        // int ans = 0;
+        // for (int i = ql; i <= qr; ++i) ans += stree[i];
+        // return ans;
         if (l > qr || r < ql) return 0;
         if (l >= ql && r <= qr) return stree[root];
         pushdown(root, l, r);
@@ -95,7 +102,7 @@ inline void decrypt(int &l, int &r) {
     r = max(l2, r2);
 }
 int main() {
-    // freopen("D:\\a.in", "r", stdin);
+    freopen("c3.in", "r", stdin);
     pseg.stree[0] = make_pair(0, 0);
     pseg.versions[0] = 0;
     n = getint(); m = getint(); type = getint();
@@ -105,13 +112,14 @@ int main() {
         if (op == 1) {
             l = getint(); r = getint();
             decrypt(l, r);
+            // lastans = seg.query(1, 1, n, l, r);
             printf("%d\n", lastans = seg.query(1, 1, n, l, r));
         } else if (op == 2) {
             l = (getint() + lastans * type) % n + 1;
-            pii x = pseg.query(pseg.versions[i], 1, n, l);
+            pii x = pseg.query(pseg.versions[i - 1], 1, n, l);
             pii y = pseg.query(x.second, 1, n, l);
             seg.edit(1, 1, n, l, l, y.first);
-            pseg.versions[i] = pseg.edit(1, 1, n, l, l, y);
+            pseg.versions[i] = pseg.edit(pseg.versions[i - 1], 1, n, l, l, y);
         } else {
             l = getint(); r = getint(); x = getint();
             decrypt(l, r);
